@@ -19,3 +19,9 @@ export const GET_NOTES = gql`
     }
   }
 `;
+
+export const IS_LOGGED_IN = gql`
+  {
+    isLoggedIn @client
+  }
+`;
