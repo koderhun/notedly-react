@@ -33,6 +33,17 @@ const Header = props => {
   // query hook for user logged in state
   const { data, client } = useQuery(IS_LOGGED_IN);
 
+  const logout = () => {
+    // remove the token
+    localStorage.removeItem('token');
+    // clear the application's cache
+    client.resetStore();
+    // update local state
+    client.writeData({ data: { isLoggedIn: false } });
+    // redirect the user to the homepage
+    props.history.push('/');
+  };
+
   return (
     <HeaderBar>
       <img src={logo} alt="Notedly Logo" height="40" />
@@ -40,20 +51,7 @@ const Header = props => {
       {/* If logged in display a log out link, else display sign in options */}
       <UserState>
         {data.isLoggedIn ? (
-          <ButtonAsLink
-            onClick={() => {
-              // remove the token
-              localStorage.removeItem('token');
-              // clear the application's cache
-              client.resetStore();
-              // update local state
-              client.writeData({ data: { isLoggedIn: false } });
-              // redirect the user to the homepage
-              props.history.push('/');
-            }}
-          >
-            Logout
-          </ButtonAsLink>
+          <ButtonAsLink onClick={logout}>Logout</ButtonAsLink>
         ) : (
           <p>
             <Link to={'/signin'}>Sign In</Link> or{' '}
