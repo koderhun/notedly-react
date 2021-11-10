@@ -1,0 +1,17 @@
+query NoteFeed($cursor: String) {
+  noteFeed(cursor: $cursor) {
+    cursor
+    hasNextPage
+    notes {
+      id
+      createdAt
+      content
+      favoriteCount
+      author {
+        username
+        id
+        avatar
+      }
+    }
+  }
+}
